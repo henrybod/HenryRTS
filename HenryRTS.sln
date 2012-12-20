@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HenryRTS", "HenryRTS\HenryRTS\HenryRTS.csproj", "{45BBE8E1-5F21-46DD-89AA-46B58B425B30}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "HenryRTSContent", "HenryRTS\HenryRTSContent\HenryRTSContent.contentproj", "{EF8E80D4-D343-45F0-9120-15B6B2B47420}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45BBE8E1-5F21-46DD-89AA-46B58B425B30}.Debug|x86.ActiveCfg = Debug|x86
+		{45BBE8E1-5F21-46DD-89AA-46B58B425B30}.Debug|x86.Build.0 = Debug|x86
+		{45BBE8E1-5F21-46DD-89AA-46B58B425B30}.Release|x86.ActiveCfg = Release|x86
+		{45BBE8E1-5F21-46DD-89AA-46B58B425B30}.Release|x86.Build.0 = Release|x86
+		{EF8E80D4-D343-45F0-9120-15B6B2B47420}.Debug|x86.ActiveCfg = Debug|x86
+		{EF8E80D4-D343-45F0-9120-15B6B2B47420}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
