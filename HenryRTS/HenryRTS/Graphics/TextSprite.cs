@@ -18,7 +18,7 @@ namespace HenryRTS {
                 }
             }
         }
-        public SpriteFont Font = Global.Fonts.Motorwerk; //default font
+        public SpriteFont Font = Fonts.Motorwerk; //default font
         public Color Color = Color.White;
         public float Scale = 1.0f;
         public Point Position = new Point(0, 0);
@@ -66,7 +66,7 @@ namespace HenryRTS {
         }
 
         public void Draw() {
-            //Global.SpriteBatch.DrawString(Font, Text, new Vector2(Position.X-1, Position.Y-1) - Font.MeasureString(text) / 2.0f, Color);
+            //Utility.DrawPixel(new Zone(Position.X - (int)origin.X, Position.Y - (int)origin.Y, (int)Font.MeasureString(Text).X, (int)Font.MeasureString(Text).Y), Color.White);
             Global.SpriteBatch.DrawString(Font, Text, Position.Vector, Color, 0.0f, origin, Scale, SpriteEffects.None, 0);
         }
 

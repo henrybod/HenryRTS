@@ -7,8 +7,12 @@ using Microsoft.Xna.Framework;
 namespace HenryRTS {
     public class RandomMap : Map {
 
-        public RandomMap(Point dimensions, EnvironmentType e) : base(dimensions, "RandomMap", e) {
-            if (e == EnvironmentType.Earth)
+        public RandomMap(Point dimensions, Global.MapEnvironments e) : base(dimensions, "RandomMap", e) {
+
+        }
+
+        public void Populate() {
+            if (MapType == Global.MapEnvironments.Earth)
                 GenerateEarthObjects();
         }
 
@@ -34,7 +38,7 @@ namespace HenryRTS {
             for (float M = 0; M < radius; M += 1.0f) {
                 for (float theta = 0; theta < 2 * Math.PI; theta += (float)(2 * Math.PI / 360)) {
                     if (r.Next(1000) == 1) {
-                        new Tree(this, new Point(center.Vector + new Vector2(M * (float)Math.Cos(theta), M * (float)Math.Sin(theta))));
+                        new Tree(new Point(center.Vector + new Vector2(M * (float)Math.Cos(theta), M * (float)Math.Sin(theta))));
                     }
                 }
             }

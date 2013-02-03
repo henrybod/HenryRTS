@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Win32;
 
 namespace HenryRTS {
     public class ControllableObject : SelectableObject {
@@ -10,14 +11,16 @@ namespace HenryRTS {
         //1: a 'target' to take action towrds
         //2: an owner player to restrict commands
 
-        public MapObject Target;
+        protected Queue<Task> Tasks = new Queue<Task>();
+        protected Task currentTask;
         public Player Owner;
 
 
-        public ControllableObject(Player owner, Map m, Zone initialBounds) : base(m, initialBounds) {
+        public ControllableObject(Player owner, Zone initialBounds) : base(initialBounds) {
             Owner = owner;
-            //todo: rework controllable object and unit for better control system
-            //todo: add new classes "moving object" and "pathing object"
+            Owner.AddObject(this);
+            currentTask = new IdleTask();
+            currentTask.Finished = true;
         }
 
         protected virtual void DetermineState() {
@@ -26,6 +29,39 @@ namespace HenryRTS {
         }
         protected virtual void TakeAction() {
             //by looking at the state, a controllable object must take an appropriate action
+        }
+
+        public void SetTask(Task t) {
+            if (Tasks.Count > 0)
+                Tasks.Clear();
+            Tasks.Enqueue(t);
+        }
+
+        public void EnqueueTask(Task t) {
+            Tasks.Enqueue(t);
+        }
+
+        public override void Update() {
+            base.Update();
+
+            //i have tasks to perform...
+            //decide what task to perform
+            if (currentTask.Finished) { //wait until task is finished to change tasks
+                //i have finished my current task
+                if (Tasks.Count > 0) //if i have more tasks...
+                    currentTask = Tasks.Dequeue(); //start the next one
+                else //if i am out of tasks...
+                    currentTask = new IdleTask(); //then i am idle
+            }
+            
+            //do the current task
+            currentTask.Update(this);
+        }
+
+        protected override void Die() {
+            //remove myself from my owner's list of objects
+            Owner.RemoveObject(this);
+            base.Die(); //remove from map
         }
     }
 }

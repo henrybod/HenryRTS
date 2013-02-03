@@ -9,21 +9,21 @@ namespace HenryRTS {
     public class Keyboard {
 
         //list of established game keys (keybinds are below in Update())
-        public bool Up = false;
-        public bool Down = false;
-        public bool Left = false;
-        public bool Right = false;
+        public static bool Up = false;
+        public static bool Down = false;
+        public static bool Left = false;
+        public static bool Right = false;
 
-        public bool W = false;
-        public bool S = false;
-        public bool A = false;
-        public bool D = false;
+        public static bool W = false;
+        public static bool S = false;
+        public static bool A = false;
+        public static bool D = false;
 
-        public bool Enter = false;
-        public bool Back = false;
-        public bool Shift = false;
+        public static bool Enter = false;
+        public static bool Back = false;
+        public static bool Shift = false;
 
-        public void Update() {
+        public static void Update() {
             //get all the key values for this frame
             KeyboardState k = Microsoft.Xna.Framework.Input.Keyboard.GetState();
             Up = k.IsKeyDown(Keys.Up);
@@ -42,7 +42,7 @@ namespace HenryRTS {
             //todo: come up with a way the user could use custom keybinds
         }
 
-        public Vector2 ArrowKeysUnitVector {
+        public static Vector2 ArrowKeysUnitVector {
             get {
                 Vector2 d = Vector2.Zero;
                 if (Left)

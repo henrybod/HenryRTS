@@ -25,7 +25,7 @@ namespace HenryRTS {
             float percentageComplete = 0.0f;
             for (int i = 0; i < 88; i++) {
                 if (r.Elements[i] == 0) continue; //only proceed if there's something worth drawing
-                pixel.Color = Global.Elements[i].Color; //draw it the corresponding element color
+                pixel.Color = Elements.GetElement(i).Color; //draw it the corresponding element color
                 float width = ((float)r.Elements[i] / (float)r.TotalUnits) * ((float)Bounds.Width - 2 * BorderThickness);
 
                 z.Right = (int)(Bounds.Left + BorderThickness + percentageComplete * (Bounds.Width - 2 * BorderThickness) + width);

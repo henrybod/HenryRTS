@@ -7,13 +7,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace HenryRTS {
 
-    public class SpriteDatabase {
+    public class Sprites {
 
-        public Dictionary<string, SpriteInfo> Infos = new Dictionary<string, SpriteInfo>();
-        public Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
+        public static Dictionary<string, SpriteInfo> Infos = new Dictionary<string, SpriteInfo>();
+        public static Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
 
 
-        public SpriteDatabase() {
+        static Sprites() {
             //populate the dictionary
             //>>>format: filepath, texture name, height, width, # of frames<<<
             //Empty texture
@@ -37,7 +37,7 @@ namespace HenryRTS {
             AddEntry("Textures/SeemlessDirt", "Dirt", 2000, 2000, 1);
         }
 
-        private void AddEntry(string file, string index, int height, int width, int frameCount) {
+        static void AddEntry(string file, string index, int height, int width, int frameCount) {
             //add to Infos
             SpriteInfo si = new SpriteInfo();
             si.Filename = file;
@@ -55,7 +55,7 @@ namespace HenryRTS {
                 Textures.Add(file, Global.Content.Load<Texture2D>(file));
         }
 
-        public void SpriteDiag(string spriteName) {
+        public static void SpriteDiag(string spriteName) {
             SpriteInfo s = Infos[spriteName];
             Console.WriteLine("-------------------------------------");
             Console.WriteLine("Sprite Entry \"" + spriteName + "\":");

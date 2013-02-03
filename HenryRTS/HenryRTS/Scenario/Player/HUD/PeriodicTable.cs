@@ -11,7 +11,7 @@ namespace HenryRTS {
         private ElementSquare[,] elements = new ElementSquare[7, 18];
         private Vector2 cornerPosition = new Vector2(200, 100);
         private Zone smallBounds = new Zone(0, 0, 100, 50);
-        private Zone largeBounds = new Zone(0, 0, Global.Window.ClientBounds.Width, Global.Window.ClientBounds.Height);
+        private Zone largeBounds = new Zone(0, 0, Global.Window.ClientBounds.Width, (int)(Global.Window.ClientBounds.Width / 2.0f));
 
         public PeriodicTable(Player myPlayer) {
             //set initial bounds
@@ -129,7 +129,7 @@ namespace HenryRTS {
 
         public override void Update() {
             //calculate lower left corner position
-            if (this.smallBounds.Contains(Global.Mouse.PositionInWindow))
+            if (this.smallBounds.Contains(Mouse.PositionInWindow))
                 cornerPosition = Global.MoveElastically(cornerPosition, 10.0f, new Vector2(largeBounds.Right, largeBounds.Bottom));
             else
                 cornerPosition = Global.MoveElastically(cornerPosition, 10.0f, new Vector2(smallBounds.Right, smallBounds.Bottom));
@@ -178,15 +178,15 @@ namespace HenryRTS {
             else {
                 this.myPlayer = myPlayer;
                 this.atomicNumber = atomicNumber;
-                background.Color = Global.Elements[atomicNumber].Color;
+                background.Color = Elements.GetElement(atomicNumber).Color;
                 pixel.Color = Color.Black;
 
-                symbol.Font = Global.Fonts.Consolas;
-                symbol.Text = Global.Elements[atomicNumber].Symbol;
+                symbol.Font = Fonts.Consolas;
+                symbol.Text = Elements.GetElement(atomicNumber).Symbol;
                 symbol.Color = Color.Black;
                 symbol.Origin = Global.Origins.Left;
 
-                quantity.Font = Global.Fonts.Consolas;
+                quantity.Font = Fonts.Consolas;
                 quantity.Text = "0";
                 quantity.Color = Color.Black;
                 quantity.Origin = Global.Origins.BottomRight;

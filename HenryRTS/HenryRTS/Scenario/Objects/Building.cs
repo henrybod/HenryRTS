@@ -28,7 +28,7 @@ namespace HenryRTS {
 
 
 
-        public Building(Player owner, Map m, Zone initialBounds) : base(owner, m, initialBounds) {
+        public Building(Player owner, Map m, Zone initialBounds) : base(owner, initialBounds) {
 
         }
     }

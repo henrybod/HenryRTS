@@ -42,11 +42,6 @@ namespace HenryRTS {
         /// </summary>
         protected override void LoadContent() {
             Global.SpriteBatch = new SpriteBatch(GraphicsDevice);
-            Global.Sprites = new SpriteDatabase();
-            Global.Fonts = new FontDatabase();
-            Global.Elements = new ElementDatabase();
-            Global.Mouse = new Mouse();
-            Global.Keyboard = new Keyboard();
             Global.Camera = new Camera();
             Global.CurrentScreen = new MainMenu();
             Global.Camera.Center = Global.CurrentScreen.Bounds.Center;
@@ -74,8 +69,8 @@ namespace HenryRTS {
             //hmmm
             Global.Time = gameTime;
             Global.t = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Global.Mouse.Update();
-            Global.Keyboard.Update();
+            Mouse.Update();
+            Keyboard.Update();
             Global.Camera.Update();
             Global.CurrentScreen.Update();
             //tester.Update();
@@ -94,7 +89,7 @@ namespace HenryRTS {
 
             Global.CurrentScreen.Draw();
             //tester.Draw();
-            Global.Mouse.Draw();
+            Mouse.Draw();
 
 
             Global.SpriteBatch.End();

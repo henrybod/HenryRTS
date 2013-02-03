@@ -18,8 +18,8 @@ namespace HenryRTS {
             Mining
         }
 
-        public Gatherer(Player owner, Map m, Point initialPosition) : base(owner, m, new Zone(initialPosition.X, initialPosition.Y, GathererSize.X, GathererSize.Y)) {
-            Sprites["Idle"].Sprite.SpriteName = "GathererIdle";
+        public Gatherer(Player owner, Point initialPosition) : base(owner, new Zone(initialPosition.X, initialPosition.Y, GathererSize.X, GathererSize.Y)) {
+            Idle.SpriteName = "GathererIdle";
             selectionCircleOffset = 16;
             healthMax = GathererHealth;
             health = healthMax;
@@ -28,9 +28,7 @@ namespace HenryRTS {
         protected override void DetermineState() {
             base.DetermineState(); //get default state
             //possibly override that state according to my specific function as a gatherer
-            if (Target is Resource) {
-                
-            }
+            
         }
 
     }

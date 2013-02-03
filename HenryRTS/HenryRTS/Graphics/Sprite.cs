@@ -11,7 +11,7 @@ namespace HenryRTS {
         private string texture;
         public string SpriteName {
             set {
-                SpriteInfo i = Global.Sprites.Infos[value];
+                SpriteInfo i = Sprites.Infos[value];
                 frame = i.Frame;
                 frameCount = i.FrameCount;
                 texture = i.Filename;
@@ -44,13 +44,13 @@ namespace HenryRTS {
 
         public override void Draw() {
             //draw this sprite to its current bounds
-            Global.SpriteBatch.Draw(Global.Sprites.Textures[texture], Bounds.WindowCoordinates.Rectangle, frame, Color);
+            Global.SpriteBatch.Draw(Sprites.Textures[texture], Bounds.WindowCoordinates.Rectangle, frame, Color);
         }
         
 
         public void Draw(Zone z) {
             //draw this sprite to an external Zone
-            Global.SpriteBatch.Draw(Global.Sprites.Textures[texture], z.WindowCoordinates.Rectangle, frame, Color);
+            Global.SpriteBatch.Draw(Sprites.Textures[texture], z.WindowCoordinates.Rectangle, frame, Color);
         }
     }
 }

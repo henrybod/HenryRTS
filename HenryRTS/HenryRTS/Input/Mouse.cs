@@ -8,33 +8,33 @@ using Microsoft.Xna.Framework.Input;
 namespace HenryRTS {
 
     public class Mouse {
-        private Sprite cursor = new Sprite();
-        private Sprite pixel = new Sprite();
+        private static Sprite cursor = new Sprite();
+        private static Sprite pixel = new Sprite();
         public enum CursorTypeEnum {
             Point,
             Select,
             Attack
         }
-        private Point position = new Point(0, 0);
-        private MouseState ms, pms;
-        public Zone SelectionBox = new Zone(Zone.ZoneModeEnum.WindowCoordinates, 0, 0, 0, 0);
-        private Point DragStart = new Point(0, 0);
+        private static Point position = new Point(0, 0);
+        private static MouseState ms, pms;
+        public static Zone SelectionBox = new Zone(Zone.ZoneModeEnum.WindowCoordinates, 0, 0, 0, 0);
+        private static Point DragStart = new Point(0, 0);
 
         public enum MouseButton {
             None, Left, Right, Middle
         }
-        private MouseButton buttonIsDown = MouseButton.None;
-        public MouseButton ButtonIsDown {
+        private static MouseButton buttonIsDown = MouseButton.None;
+        public static MouseButton ButtonIsDown {
             get { return buttonIsDown; }
         }
-        public Point PositionInWindow {
+        public static Point PositionInWindow {
             get { return position; }
         }
-        public Point PositionInGame {
+        public static Point PositionInGame {
             get { return position + Global.Camera.TopLeftCorner; }
         }
-        private bool isDragging = false;
-        public bool IsDragging {
+        private static bool isDragging = false;
+        public static bool IsDragging {
             get { return isDragging; }
         }
 
@@ -43,14 +43,14 @@ namespace HenryRTS {
 
 
 
-        public Mouse() {
+        static Mouse() {
             cursor.SpriteName = "CursorMenu";
             pixel.SpriteName = "WhitePixel";
             cursor.Bounds.Mode = Zone.ZoneModeEnum.WindowCoordinates;
             cursor.Bounds.LockDimensions = true;
         }
 
-        public void Update() {
+        public static void Update() {
             pms = ms;
             ms = Microsoft.Xna.Framework.Input.Mouse.GetState();
             //check buttons
@@ -110,7 +110,7 @@ namespace HenryRTS {
 
         }
 
-        public void Draw() {
+        public static void Draw() {
             cursor.Draw();
             pixel.Color = Color.ForestGreen;
             pixel.Color.A = 1;

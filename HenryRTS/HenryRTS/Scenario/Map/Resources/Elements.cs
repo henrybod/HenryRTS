@@ -5,19 +5,23 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace HenryRTS {
-    public class ElementDatabase {
+    public class Elements {
 
-        private Element[] elements;
-        public Element this[int atomicNumber] {
-            get {
-                if (atomicNumber > 0 && atomicNumber <= elements.Count() || elements[atomicNumber - 1] == null)
-                    return elements[atomicNumber - 1];
-                else
-                    throw new Exception("Invalid atomic number.");
-            }
+        static Element[] elements;
+        public static Element GetElement(int atomicNumber) {
+            if (atomicNumber > 0 && atomicNumber <= elements.Count() || elements[atomicNumber - 1] == null)
+                return elements[atomicNumber - 1];
+            else
+                throw new Exception("Invalid atomic number.");
+        }
+        public static Element GetElement(string fullName) {
+            foreach (Element e in elements) 
+                if (e.Name == fullName)
+                    return e;
+            throw new Exception("Element '" + fullName + "' not found!");
         }
 
-        public ElementDatabase() {
+        static Elements() {
             elements = new Element[88];
             //add all t3h elements that i will be using
             elements[0] = new Element("Hydrogen", "H", new Color(0, 150, 0));

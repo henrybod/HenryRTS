@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace HenryRTS {
-    public class Unit : MovingObject {
+    public class Unit : ControllableObject {
 
         public enum UnitStates {
             Attacking,
@@ -30,42 +30,60 @@ namespace HenryRTS {
             get { return weaponRange; }
         }
 
+        protected Animation Idle, Moving, Attacking, Dying;
 
+        public Unit(Player owner, Zone initialBounds) : base(owner, initialBounds) {
+            Idle = new Animation("WhitePixel");
+            Idle.Bounds.Width = this.Width;
+            Idle.Bounds.Height = this.Height;
 
-        public Unit(Player owner, Map m, Zone initialBounds) : base(owner, m, initialBounds) {
-            AddSprite("Idle", "GathererIdle", new Point(0, 0), true);
-            AddSprite("Moving", "GathererIdle", new Point(0, 0), true);//todo: add moar sprites
-            AddSprite("Attacking", "GathererIdle", new Point(0, 0), true);
-            //AddSprite("Dying", "GenericSmallExplosion", new Point(0, 0), true);
+            Moving = new Animation("WhitePixel");
+            Moving.Bounds.Width = this.Width;
+            Moving.Bounds.Height = this.Height;
+
+            Attacking = new Animation("WhitePixel");
+            Attacking.Bounds.Width = this.Width;
+            Attacking.Bounds.Height = this.Height;
+
+            Dying = new Animation("WhitePixel");
+            Dying.Bounds.Width = this.Width;
+            Dying.Bounds.Height = this.Height;
         }
 
         public override void Update() {
             //determine action
             DetermineState();
             //set sprites
-            Sprites["Idle"].IsVisible = unitState == UnitStates.Idle || unitState == UnitStates.HoldingPosition;
-            Sprites["Moving"].IsVisible = unitState == UnitStates.Moving || unitState == UnitStates.Patrolling;
-            //take action
-            TakeAction();
+            if (unitState == UnitStates.Idle || unitState == UnitStates.HoldingPosition)
+                Play(Idle);
+            else if (unitState == UnitStates.Moving || unitState == UnitStates.Patrolling)
+                Play(Moving);
+            else if (unitState == UnitStates.Attacking)
+                Play(Attacking);
+            else if (unitState == UnitStates.Dying)
+                Play(Dying);
+            else
+                Play(Idle);
+
+
             base.Update();
         }
 
         protected override void DetermineState() {
             if (Health == 0)
                 unitState = UnitStates.Dying;
-            if (this.isMoving)
+            else if (currentTask is MoveTask)
                 unitState = UnitStates.Moving;
+            else if (currentTask is IdleTask)
+                unitState = UnitStates.Idle;    
+        }
+
+
+
+
+        //units may attack things!
+        protected void Attack(SelectableObject so) {
             
         }
-
-        protected override void TakeAction() {
-            if (unitState == UnitStates.Dying)
-                ; //play death animation and remove unit from lists when finished
-            if (unitState == UnitStates.Idle)
-                //just sit there la dee da
-                ;
-
-        }
-
     }
 }

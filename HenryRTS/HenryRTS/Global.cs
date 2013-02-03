@@ -38,6 +38,24 @@ namespace HenryRTS {
             BottomRight,
             Center
         }
+        public enum GameTypes {
+            FreeForAll,
+            TeamVsTeam,
+            Survival
+        }
+        public enum MapEnvironments {
+            Earth,
+            Desert,
+            Ice,
+            Lava,
+            Asteroid
+        }
+        public enum GenericSizes {
+            Small,
+            Medium,
+            Large,
+            VeryLarge,
+        }
         public static Vector2 MoveLinearly(Vector2 p1, float vel, Vector2 p2) {
             Vector2 distanceTotal = (p2 - p1);
             if (distanceTotal.Length() == 0)
@@ -62,12 +80,6 @@ namespace HenryRTS {
             return p1 + (currVel * Global.t);
         }
 
-        
-        public static SpriteDatabase Sprites;
-        public static FontDatabase Fonts;
-        public static Mouse Mouse;
-        public static Keyboard Keyboard;
         public static Camera Camera;
-        public static ElementDatabase Elements;
     }
 }

@@ -8,15 +8,8 @@ namespace HenryRTS {
     public class Map {
 
         //a map has a type (what kind of planet are we on?)
-        public enum EnvironmentType {
-            Earth,
-            Desert,
-            Ice,
-            Lava,
-            Asteroid
-        }
-        protected EnvironmentType mapType;
-        public EnvironmentType MapType {
+        protected Global.MapEnvironments mapType;
+        public Global.MapEnvironments MapType {
             get { return mapType; }
         }
         //a map has a name
@@ -68,7 +61,7 @@ namespace HenryRTS {
         Sprite pixel = new Sprite("WhitePixel");
 
         //constructor
-        public Map(Point dimensions, string name, EnvironmentType e) {
+        public Map(Point dimensions, string name, Global.MapEnvironments e) {
             this.dimensions = dimensions/tileSize;
             objectArray = new MapTile[Dimensions.X, Dimensions.Y];
             for (int i = 0; i < Dimensions.X; i++)
@@ -99,7 +92,21 @@ namespace HenryRTS {
         public void AddObject(MapObject mo) {
             objectList.Add(mo);
         }
+        public Resource GetNearestResource(Type t, Point near) {
+            Resource nearest = null;
+            float distance = -1;
+            foreach (Resource r in objectList) {
+                if (distance == -1 || (r.Position - near.Vector).Length() < distance) {
+                    distance = (r.Position - near.Vector).Length();
+                    nearest = r;
+                }
+            }
 
+            if (distance == -1)
+                return null;
+            else
+                return nearest;
+        }
         //////////////////////////////////////////////////////////
         //\\\\\\  \\\\\\  \\\\\\  \\  \\  \\\\\\  \\\\     \\\\ //
         //\\  \\  \\  \\    \\    \\  \\    \\    \\  \\  \\    //
@@ -110,7 +117,7 @@ namespace HenryRTS {
         //List<MapTile> ThingiesToDraw = new List<MapTile>();
         Dictionary<MapTile, MapTile> cameFrom = new Dictionary<MapTile, MapTile>();
         MapTile goal, start;
-        public Stack<Point> GetPath(Point start, Point goal) {
+        public Stack<Point> GetPath(Point start, Point goal, Point size) {
             cameFrom.Clear();
             //ThingiesToDraw.Clear();
             this.start = objectArray[start.X/tileSize.X, start.Y/tileSize.Y];
@@ -122,6 +129,8 @@ namespace HenryRTS {
             openSet.Add(this.start);
             while (openSet.Min != this.goal) {
                 MapTile current = openSet.Min;
+                if (current == null) //there is no path to the goal
+                    return new Stack<Point>();
                 openSet.Remove(current);
                 closedSet.Add(current);
                 //ThingiesToDraw.Add(current);
@@ -141,11 +150,12 @@ namespace HenryRTS {
                     }
                 }
             }
-            return reconstructPath();
+            return reconstructPath(goal/* + new Point(size.X/2, size.Y/2)*/);
         }
 
-        Stack<Point> reconstructPath() {
+        Stack<Point> reconstructPath(Point end) {
             Stack<Point> path = new Stack<Point>();
+            path.Push(end);
             MapTile current = goal;
             while (current != start) {
                 path.Push(current.Coords * tileSize);
@@ -153,7 +163,7 @@ namespace HenryRTS {
             }
             return path;
         }
-
+        
         float g(Point p) {
             //distance from start to p
             return (p.Vector - start.Coords.Vector).Length();
@@ -171,28 +181,41 @@ namespace HenryRTS {
             for (int i = -1; i <= 1; i++) {
                 for (int j = -1; j <= 1; j++) {
                     Point p = new Point(mt.Coords.X + i, mt.Coords.Y + j);
-                    if ((p.X >= 0 && p.X < dimensions.X && p.Y >= 0 && p.Y < dimensions.Y) //its on the map
-                        && (objectArray[p.X, p.Y].Object == null || objectArray[p.X, p.Y].Object == start.Object) //its open
-                        && (!(i == 0 && j == 0))) { //its not mt
+                    if (p.X < 0 && p.Y < 0
+                        && p.X + start.Object.Width/tileSize.X >= dimensions.X
+                        && p.Y + start.Object.Height/tileSize.Y >= dimensions.Y) //invalid coordinate (off the map!)
+                            continue;
+
+                    else if (isClear(mt) //the unit may go here (tile and area is clear)
+                         && (!(i == 0 && j == 0))) { //the neighbor is not me
                             l.Add(objectArray[p.X, p.Y]);
                     }
                 }
             }
             return l;
         }
+        bool isClear(MapTile mt) {
+            for (int i = 0; i < start.Object.Width/tileSize.X; i++) {
+                for (int j = 0; j < start.Object.Height/tileSize.Y; j++) {
+                    if (objectArray[mt.Coords.X + i, mt.Coords.Y + j].Object != null
+                     && objectArray[mt.Coords.X + i, mt.Coords.Y + j].Object != start.Object)
+                        return false;
+                }
+            }
+            return true;
+        }
 
 
-        public class MapTile {
+        private class MapTile {
             public MapObject Object;
             public float FScore;
-            //public MapTile CameFrom;
             public readonly Point Coords;
             public MapTile(Point coords) {
                 Coords = coords;
             }
         }
 
-        public class MapTileComparer : IComparer<MapTile> {
+        private class MapTileComparer : IComparer<MapTile> {
             public int Compare(MapTile x, MapTile y) {
  	            if (x.FScore < y.FScore)
                     return -1;

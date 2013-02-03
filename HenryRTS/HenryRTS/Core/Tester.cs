@@ -13,7 +13,7 @@ namespace HenryRTS {
         TextSprite ts = new TextSprite();
 
         public Tester(Zone z) {
-            ts.Font = Global.Fonts.Consolas;
+            ts.Font = Fonts.Consolas;
             ts.Text = "Test String";
             ts.Origin = Global.Origins.Bottom;
         }
@@ -21,13 +21,13 @@ namespace HenryRTS {
         public void Update() {
 
             Point offset = new Point(0, 0);
-            if (Global.Keyboard.A)
+            if (Keyboard.A)
                 offset.X -= 1;
-            if (Global.Keyboard.D)
+            if (Keyboard.D)
                 offset.X += 1;
-            if (Global.Keyboard.W)
+            if (Keyboard.W)
                 offset.Y -= 1;
-            if (Global.Keyboard.S)
+            if (Keyboard.S)
                 offset.Y += 1;
             ts.Update();
         }

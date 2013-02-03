@@ -112,14 +112,15 @@
     <Compile Include="Core\Tester.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Graphics\Animation.cs" />
+    <Compile Include="Scenario\Buildings\Cache.cs" />
+    <Compile Include="Scenario\Objects\AnimatedMapObject.cs" />
     <Compile Include="Graphics\Bars\ResourceBar.cs" />
     <Compile Include="Graphics\Camera.cs" />
-    <Compile Include="Graphics\FontDatabase.cs" />
+    <Compile Include="Graphics\Fonts.cs" />
     <Compile Include="Graphics\Point.cs" />
     <Compile Include="Graphics\Bars\ProgressBar.cs" />
     <Compile Include="Graphics\Sprite.cs" />
-    <Compile Include="Graphics\SpriteDatabase.cs" />
-    <Compile Include="Graphics\SpriteGroup.cs" />
+    <Compile Include="Graphics\Sprites.cs" />
     <Compile Include="Graphics\TextSprite.cs" />
     <Compile Include="Graphics\Zone.cs" />
     <Compile Include="Input\Keyboard.cs" />
@@ -134,8 +135,15 @@
     <Compile Include="Scenario\Map\EmptySpace.cs" />
     <Compile Include="Scenario\Objects\Building.cs" />
     <Compile Include="Scenario\Objects\ControllableObject.cs" />
-    <Compile Include="Scenario\Objects\MovingObject.cs" />
-    <Compile Include="Scenario\Objects\Task.cs" />
+    <Compile Include="Scenario\Objects\OffensiveUnit.cs" />
+    <Compile Include="Scenario\Objects\Weapon.cs" />
+    <Compile Include="Scenario\Tasks\FollowTask.cs" />
+    <Compile Include="Scenario\Tasks\IdleTask.cs" />
+    <Compile Include="Scenario\Tasks\PatrolTask.cs" />
+    <Compile Include="Scenario\Tasks\MineTask.cs" />
+    <Compile Include="Scenario\Tasks\AttackTask.cs" />
+    <Compile Include="Scenario\Tasks\MoveTask.cs" />
+    <Compile Include="Scenario\Tasks\Task.cs" />
     <Compile Include="Scenario\Player\HUD\PeriodicTable.cs" />
     <Compile Include="Scenario\Player\HumanPlayer.cs" />
     <Compile Include="Scenario\Objects\SelectableObject.cs" />
@@ -144,12 +152,13 @@
     <Compile Include="Scenario\Map\Map.cs" />
     <Compile Include="Scenario\Map\Maps\RandomMap.cs" />
     <Compile Include="Scenario\Map\Resource.cs" />
-    <Compile Include="Scenario\Map\Resources\ElementDatabase.cs" />
+    <Compile Include="Scenario\Map\Resources\Elements.cs" />
     <Compile Include="Scenario\Map\Resources\Tree.cs" />
     <Compile Include="Scenario\Player\Player.cs" />
     <Compile Include="Scenario\Scenario.cs" />
     <Compile Include="Scenario\Objects\Unit.cs" />
     <Compile Include="Scenario\Units\Gatherer.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

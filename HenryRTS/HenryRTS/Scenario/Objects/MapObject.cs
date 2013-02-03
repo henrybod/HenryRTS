@@ -11,8 +11,6 @@ namespace HenryRTS {
 
         //so it has a bounds to keep track of its own dimensions
         private Zone bounds;
-        //it belongs on a map
-        private Map myMap;
 
         public int Left {
             get { return bounds.Left; }
@@ -47,9 +45,8 @@ namespace HenryRTS {
                     return; //the value hasnt actually changed, so there's nothing to do
 
                 //move the object in the grid (to the nearest integer value)
-                myMap[bounds.Left, bounds.Top] = new EmptySpace(myMap, bounds);
-                myMap[(int)value.X - (int)(bounds.Width/2), (int)value.Y - (int)(bounds.Height/2)] = this;
-
+                Scenario.Map[bounds.Left, bounds.Top] = new EmptySpace(bounds);
+                Scenario.Map[(int)value.X - (int)(bounds.Width/2), (int)value.Y - (int)(bounds.Height/2)] = this;
                 //move the bounds
                 bounds.Center = new Point((int)value.X, (int)value.Y);
 
@@ -62,16 +59,15 @@ namespace HenryRTS {
         private Sprite pixel = new Sprite("WhitePixel");
 
 
-        public MapObject(Map m, Zone initialBounds) {
+        public MapObject(Zone initialBounds) {
             this.bounds = initialBounds;
             this.bounds.LockDimensions = true;
             this.position = new Vector2(-1, -1);
-            this.myMap = m;
             if (!(this is EmptySpace || this is Location)) {
                 //set the position of this object to place in the map array
                 Position = new Vector2(bounds.Left, bounds.Top);
                 //add this object to the list of map objects
-                m.AddObject(this);
+                Scenario.Map.AddObject(this);
             }
             this.position = bounds.Center.Vector;
 
@@ -85,35 +81,12 @@ namespace HenryRTS {
 
         }
         public virtual void Draw() {
-            if (DrawBorder) {
-                Zone z = new Zone();
-                z.Center = Center;
-                //top line
-                z.Left = Left - 1;
-                z.Top = Top - 1;
-                z.Right = Right;
-                z.Bottom = Top;
-                pixel.Draw(z);
-                //right line
-                z.Right = Right + 1;
-                z.Left = Right;
-                z.Bottom = Bottom;
-                pixel.Draw(z);
-                //bottom line
-                z.Bottom = Bottom + 1;
-                z.Top = Bottom;
-                z.Left = Left;
-                pixel.Draw(z);
-                //left line
-                z.Left = Left - 1;
-                z.Right = Left;
-                z.Top = Top;
-                pixel.Draw(z);
-            }
+            if (DrawBorder)
+                bounds.DrawBorder();
         }
 
-        protected Stack<Point> GetPath(Point a, Point b) {
-            return myMap.GetPath(a, b);
+        protected virtual void Die() {
+            //remove myself from the map
         }
     }
 }

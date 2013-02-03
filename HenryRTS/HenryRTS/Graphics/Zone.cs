@@ -151,5 +151,30 @@ namespace HenryRTS {
                 && this.Top <= p.Y
                 && this.Bottom >= p.Y);
         }
+        public void DrawBorder() {
+                Zone z = new Zone();
+                z.Center = Center;
+                //top line
+                z.Left = Left - 1;
+                z.Top = Top - 1;
+                z.Right = Right;
+                z.Bottom = Top;
+                Utility.DrawPixel(z, Color.Tomato);
+                //right line
+                z.Right = Right + 1;
+                z.Left = Right;
+                z.Bottom = Bottom;
+                Utility.DrawPixel(z, Color.Tomato);
+                //bottom line
+                z.Bottom = Bottom + 1;
+                z.Top = Bottom;
+                z.Left = Left;
+                Utility.DrawPixel(z, Color.Tomato);
+                //left line
+                z.Left = Left - 1;
+                z.Right = Left;
+                z.Top = Top;
+                Utility.DrawPixel(z, Color.Tomato);
+        }
     }
 }

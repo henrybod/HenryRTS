@@ -75,8 +75,8 @@ namespace HenryRTS {
             if (currState == ButtonState.Disabled)
                 return ButtonState.Disabled;
 
-            if (this.Bounds.Contains(Global.Mouse.PositionInGame)) {
-                if (Global.Mouse.ButtonIsDown == Mouse.MouseButton.Left)
+            if (this.Bounds.Contains(Mouse.PositionInGame)) {
+                if (Mouse.ButtonIsDown == Mouse.MouseButton.Left)
                     return ButtonState.Pressed;
                 else
                     return ButtonState.Highlighted;

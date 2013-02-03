@@ -53,7 +53,7 @@ namespace HenryRTS {
         }
 
         public void Update() {
-            Vector2 newPosition = position + speed * Global.Keyboard.ArrowKeysUnitVector;
+            Vector2 newPosition = position + speed * Keyboard.ArrowKeysUnitVector;
             if (newPosition != position) {
                 //ok, camera must move...
                 //check to see if the new camera bounds are within the screen
